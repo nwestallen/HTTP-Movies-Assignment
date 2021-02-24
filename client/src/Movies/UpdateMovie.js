@@ -6,7 +6,7 @@ import { useParams, useHistory, Route } from 'react-router-dom';
 
 const UpdateMovie = props => {
 
-    const { movieID } = props;
+    const { getMovieList } = props;
     const [formData, setFormData] = useState({ id: '', title: '', director: '', metascore: '', stars: []});
     const { id } = useParams();
     const history = useHistory();
@@ -32,6 +32,7 @@ const UpdateMovie = props => {
         .put(`http://localhost:5000/api/movies/${id}`, formData)
         .then(res => {
             console.log(res);
+            getMovieList();
             history.push('/');
         })
         .catch(err => console.log(err));
