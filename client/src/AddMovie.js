@@ -6,7 +6,7 @@ const AddMovie = props => {
 
     const { getMovieList } = props;
 
-    const [formData, setFormData] = useState({title: '', director: '', metascore: '', stars: []});
+    const [formData, setFormData] = useState({title: '', director: '', metascore: '', stars: ['john', 'rick']});
 
     const history = useHistory();
 
@@ -27,6 +27,22 @@ const AddMovie = props => {
         .catch(err => console.log(err));
     };
 
+    const changeActor = e => {
+        const {name, value} = e.target;
+        setFormData({...formData, stars: formData.stars.map((star,index) => index === parseInt(name) ? value : star)});
+    };
+
+    const removeActor = e => {
+        e.preventDefault();
+        console.log(e.target.value);
+        setFormData({...formData, stars: formData.stars.filter((star,index) => index !== parseInt(e.target.value))});
+    };
+
+    const addActor = e => {
+        e.preventDefault();
+        return null;
+    };
+
     return (
         <div>
             <form onSubmit={handleSubmit}>
@@ -43,7 +59,17 @@ const AddMovie = props => {
                     Metascore:
                     <input type='text' name='metascore' value={formData.metascore} onChange={handleChange}/>
                 </label>
-                <button>Submit</button>
+                <label>
+                    Actors:
+                    {formData.stars.map((actor, index) => 
+                    <div>
+                        <input type='text' name={index} value={actor} onChange={changeActor} />
+                        <button onClick={removeActor} value={index}>Remove</button>
+                    </div> 
+                    )}
+                    <button onClick={addActor}>Add Actor</button>
+                </label>
+                <button type='submit'>Submit</button>
             </form>
         </div>
     )

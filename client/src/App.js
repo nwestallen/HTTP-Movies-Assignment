@@ -50,7 +50,6 @@ const App = () => {
 
       <Route path='/add-movie'>
         <AddMovie getMovieList={getMovieList}/>
-        <p>Test</p>
       </Route>
 
       <div className="save-button" onClick={addMovie}>
